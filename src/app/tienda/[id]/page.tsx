@@ -5,6 +5,7 @@ import { getProductById } from "@/lib/firestore";
 import { formatCOP } from "@/lib/currency";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AddToCartButton from "@/components/AddToCartButton";
 
 export const dynamic = "force-dynamic";
 
@@ -87,13 +88,7 @@ export default async function ProductDetailsPage({ params }: DetailsPageProps) {
 
               {/* Add to Cart Actions */}
               <div className="flex flex-col gap-4">
-                <button
-                  className="w-full bg-[#0A192F] text-white py-5 rounded-full font-black text-sm tracking-[0.2em] uppercase hover:bg-slate-800 transition-all flex items-center justify-center gap-3 shadow-2xl hover:shadow-xl active:scale-[0.98]"
-                  style={{ fontFamily: "var(--font-lexend, Lexend)" }}
-                >
-                  <span className="material-symbols-outlined">shopping_bag</span>
-                  Agregar al Carrito
-                </button>
+                <AddToCartButton product={product} />
                 <button className="w-full bg-slate-50 text-[#0A192F] py-5 rounded-full font-bold text-sm tracking-wider hover:bg-slate-100 transition-colors border border-slate-200">
                   Comprar con Asesoría
                 </button>

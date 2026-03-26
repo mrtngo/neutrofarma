@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { getFeaturedProducts, Product } from "@/lib/firestore";
 import { formatCOP } from "@/lib/currency";
+import { useCartStore } from "@/lib/store";
 
 // Fallback products shown while Firebase isn't configured
 const FALLBACK: Product[] = [
@@ -40,6 +41,7 @@ const FALLBACK: Product[] = [
 export default function BestSellers() {
   const [products, setProducts] = useState<Product[]>(FALLBACK);
   const configured = !!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+  const { addItem } = useCartStore();
 
   useEffect(() => {
     if (!configured) return;
@@ -106,6 +108,11 @@ export default function BestSellers() {
                   {formatCOP(product.price)}
                 </span>
                 <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addItem(product);
+                  }}
                   className="bg-[#0A192F] text-white w-12 h-12 rounded-full flex items-center justify-center hover:scale-105 transition-all shadow-lg active:scale-95"
                   aria-label={`Agregar ${product.name} al carrito`}
                 >

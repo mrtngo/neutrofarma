@@ -1,10 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useCartStore } from "@/lib/store";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { getTotalItems, setIsOpen } = useCartStore();
+
+  useEffect(() => setMounted(true), []);
 
   return (
     <>
@@ -25,18 +30,21 @@ export default function Header() {
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center gap-10">
-            <Link href="/" className="text-[#0A192F] font-extrabold text-sm tracking-wide border-b-2 border-[#0A192F]" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/" className="text-[#0A192F] font-extrabold text-sm tracking-wide" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
               Inicio
             </Link>
+            <Link href="/tienda?c=Melatonina" className="text-slate-500 hover:text-[#0A192F] font-bold text-sm tracking-wide transition-colors" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+              Melatonina
+            </Link>
+            <Link href="/tienda?c=Magnesio" className="text-slate-500 hover:text-[#0A192F] font-bold text-sm tracking-wide transition-colors" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+              Magnesio
+            </Link>
+            <Link href="/tienda?c=Creatina" className="text-slate-500 hover:text-[#0A192F] font-bold text-sm tracking-wide transition-colors" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+              Creatina
+            </Link>
             <Link href="/tienda" className="text-slate-500 hover:text-[#0A192F] font-bold text-sm tracking-wide transition-colors" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
-              Tienda
-            </Link>
-            <Link href="/vitaminas" className="text-slate-500 hover:text-[#0A192F] font-bold text-sm tracking-wide transition-colors" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
-              Vitaminas
-            </Link>
-            <Link href="/bienestar" className="text-slate-500 hover:text-[#0A192F] font-bold text-sm tracking-wide transition-colors" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
-              Bienestar
+              Suplementos
             </Link>
           </div>
 
@@ -44,9 +52,17 @@ export default function Header() {
             <button className="p-2.5 hover:bg-slate-50 rounded-full transition-colors active:scale-95" aria-label="Buscar">
               <span className="material-symbols-outlined text-[#0A192F]">search</span>
             </button>
-            <button className="p-2.5 hover:bg-slate-50 rounded-full transition-colors active:scale-95 relative" aria-label="Carrito">
+            <button 
+              className="p-2.5 hover:bg-slate-50 rounded-full transition-colors active:scale-95 relative" 
+              aria-label="Carrito"
+              onClick={() => setIsOpen(true)}
+            >
               <span className="material-symbols-outlined text-[#0A192F]">local_mall</span>
-              <span className="absolute top-2 right-2 bg-[#0A192F] text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white">2</span>
+              {mounted && getTotalItems() > 0 && (
+                <span className="absolute top-1.5 right-1.5 bg-[#0A192F] text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full border border-white">
+                  {getTotalItems()}
+                </span>
+              )}
             </button>
           </div>
         </nav>
@@ -55,9 +71,10 @@ export default function Header() {
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-slate-100 px-6 py-6 flex flex-col gap-5">
             <Link href="/" className="text-[#0A192F] font-extrabold text-base tracking-wide" style={{ fontFamily: "var(--font-lexend, Lexend)" }} onClick={() => setMenuOpen(false)}>Inicio</Link>
-            <Link href="/tienda" className="text-slate-500 font-bold text-base tracking-wide" style={{ fontFamily: "var(--font-lexend, Lexend)" }} onClick={() => setMenuOpen(false)}>Tienda</Link>
-            <Link href="/vitaminas" className="text-slate-500 font-bold text-base tracking-wide" style={{ fontFamily: "var(--font-lexend, Lexend)" }} onClick={() => setMenuOpen(false)}>Vitaminas</Link>
-            <Link href="/bienestar" className="text-slate-500 font-bold text-base tracking-wide" style={{ fontFamily: "var(--font-lexend, Lexend)" }} onClick={() => setMenuOpen(false)}>Bienestar</Link>
+            <Link href="/tienda?c=Melatonina" className="text-slate-500 font-bold text-base tracking-wide" style={{ fontFamily: "var(--font-lexend, Lexend)" }} onClick={() => setMenuOpen(false)}>Melatonina</Link>
+            <Link href="/tienda?c=Magnesio" className="text-slate-500 font-bold text-base tracking-wide" style={{ fontFamily: "var(--font-lexend, Lexend)" }} onClick={() => setMenuOpen(false)}>Magnesio</Link>
+            <Link href="/tienda?c=Creatina" className="text-slate-500 font-bold text-base tracking-wide" style={{ fontFamily: "var(--font-lexend, Lexend)" }} onClick={() => setMenuOpen(false)}>Creatina</Link>
+            <Link href="/tienda" className="text-slate-500 font-bold text-base tracking-wide" style={{ fontFamily: "var(--font-lexend, Lexend)" }} onClick={() => setMenuOpen(false)}>Suplementos</Link>
           </div>
         )}
       </header>

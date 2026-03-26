@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lexend, Manrope } from "next/font/google";
 import "./globals.css";
+import CartDrawer from "@/components/CartDrawer";
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({
       </head>
       <body className={`${lexend.variable} ${manrope.variable} antialiased`}>
         {children}
+        <CartDrawer />
       </body>
     </html>
   );

@@ -328,13 +328,18 @@ export default function AdminPage() {
 
               <div className="space-y-1.5">
                 <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Categoría *</label>
-                <input
+                <select
                   required
                   value={form.category}
                   onChange={(e) => setForm({ ...form, category: e.target.value })}
-                  placeholder="Alto Rendimiento Clínico"
-                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
-                />
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F] appearance-none bg-white"
+                >
+                  <option value="" disabled>Selecciona una categoría</option>
+                  <option value="Melatonina">Melatonina</option>
+                  <option value="Magnesio">Magnesio</option>
+                  <option value="Creatina">Creatina</option>
+                  <option value="Suplementos">Suplementos</option>
+                </select>
               </div>
 
               <div className="space-y-1.5">
