@@ -25,6 +25,7 @@ export interface Product {
   description?: string;
   benefits?: string[];
   featured: boolean;
+  order?: number;
   createdAt?: Timestamp;
 }
 
@@ -44,7 +45,9 @@ export async function getProducts(): Promise<Product[]> {
   const snap = await getDocs(
     query(collection(db, COLLECTION), orderBy("createdAt", "desc"))
   );
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
+  const products = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
+  // Sort manually by order field
+  return products.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 }
 
 /** Fetch only featured products (homepage) */
@@ -56,7 +59,8 @@ export async function getFeaturedProducts(): Promise<Product[]> {
       orderBy("createdAt", "desc")
     )
   );
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
+  const products = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
+  return products.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 }
 
 /** Fetch a single product by ID */
