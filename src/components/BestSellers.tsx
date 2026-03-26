@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { getFeaturedProducts, Product } from "@/lib/firestore";
+import { formatCOP } from "@/lib/currency";
 
 // Fallback products shown while Firebase isn't configured
 const FALLBACK: Product[] = [
@@ -102,7 +103,7 @@ export default function BestSellers() {
               </h4>
               <div className="flex justify-between items-center pt-2">
                 <span className="text-2xl font-black text-[#0A192F]" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
-                  ${product.price.toFixed(2)}
+                  {formatCOP(product.price)}
                 </span>
                 <button
                   className="bg-[#0A192F] text-white w-12 h-12 rounded-full flex items-center justify-center hover:scale-105 transition-all shadow-lg active:scale-95"
