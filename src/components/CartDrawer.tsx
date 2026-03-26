@@ -13,6 +13,21 @@ export default function CartDrawer() {
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
+  const handleCheckout = () => {
+    if (items.length === 0) return;
+    
+    let message = "Hola Neutrofarma! Quisiera realizar el siguiente pedido:\n\n";
+    items.forEach(item => {
+      message += `- ${item.quantity}x ${item.product.name} (${formatCOP(item.product.price)})\n`;
+    });
+    
+    message += `\n*TOTAL: ${formatCOP(getTotalPrice())}*\n\nPor favor indíquenme los pasos para el pago.`;
+    
+    // Replace 573000000000 with the actual phone number
+    const waLink = `https://wa.me/573000000000?text=${encodeURIComponent(message)}`;
+    window.open(waLink, "_blank");
+  };
+
   return (
     <>
       {/* Overlay */}
@@ -117,10 +132,11 @@ export default function CartDrawer() {
               </span>
             </div>
             <button
-              className="w-full bg-[#0A192F] text-white py-4 rounded-full font-black text-sm tracking-widest uppercase hover:bg-slate-800 transition-colors shadow-xl active:scale-95"
+              onClick={handleCheckout}
+              className="w-full bg-[#0A192F] text-white py-4 rounded-full font-black text-sm tracking-widest uppercase hover:bg-slate-800 transition-colors shadow-xl active:scale-95 flex items-center justify-center gap-2"
               style={{ fontFamily: "var(--font-lexend, Lexend)" }}
             >
-              Proceder al Pago
+              Comprar vía WhatsApp
             </button>
           </div>
         )}

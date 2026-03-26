@@ -101,9 +101,15 @@ export default async function ProductDetailsPage({ params }: DetailsPageProps) {
               {/* Add to Cart Actions */}
               <div className="flex flex-col gap-4">
                 <AddToCartButton product={product} />
-                <button className="w-full bg-slate-50 text-[#0A192F] py-5 rounded-full font-bold text-sm tracking-wider hover:bg-slate-100 transition-colors border border-slate-200">
+                <a 
+                  href={`https://wa.me/573000000000?text=${encodeURIComponent(`Hola Neutrofarma! Estoy interesado en comprar el suplemento: ${product.name}. Quisiera más información y asesoría.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#25D366]/10 text-[#0A192F] py-5 rounded-full font-bold text-sm tracking-wider hover:bg-[#25D366]/20 transition-colors border border-[#25D366]/30 text-center flex items-center justify-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-[18px]">chat</span>
                   Comprar con Asesoría
-                </button>
+                </a>
               </div>
 
               {/* Trust markers */}
