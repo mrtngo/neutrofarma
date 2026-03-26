@@ -17,6 +17,7 @@ const EMPTY_FORM = {
   category: "",
   price: "",
   badge: "",
+  description: "",
   featured: true,
 };
 
@@ -118,6 +119,7 @@ export default function AdminPage() {
       category: p.category,
       price: String(p.price),
       badge: p.badge ?? "",
+      description: p.description ?? "",
       featured: p.featured,
     });
     setImageFile(null);
@@ -164,6 +166,11 @@ export default function AdminPage() {
       const badgeText = form.badge.trim();
       if (badgeText) {
         data.badge = badgeText;
+      }
+      
+      const descText = form.description.trim();
+      if (descText) {
+        data.description = descText;
       }
 
       if (editingId) {
@@ -362,6 +369,17 @@ export default function AdminPage() {
                   className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
                 />
               </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Descripción (opcional)</label>
+              <textarea
+                value={form.description}
+                onChange={(e) => setForm({ ...form, description: e.target.value })}
+                placeholder="Beneficios, modo de uso, etc."
+                rows={3}
+                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+              />
             </div>
 
             {/* Featured toggle */}

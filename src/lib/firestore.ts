@@ -2,6 +2,7 @@ import {
   collection,
   addDoc,
   getDocs,
+  getDoc,
   doc,
   updateDoc,
   deleteDoc,
@@ -20,13 +21,14 @@ export interface Product {
   price: number;
   imageUrl: string;
   badge?: string;
+  description?: string;
   featured: boolean;
   createdAt?: Timestamp;
 }
 
 const COLLECTION = "products";
 
-/** Fetch all products (admin use) */
+/** Fetch all products (admin/tienda) */
 export async function getProducts(): Promise<Product[]> {
   const snap = await getDocs(
     query(collection(db, COLLECTION), orderBy("createdAt", "desc"))
@@ -44,6 +46,13 @@ export async function getFeaturedProducts(): Promise<Product[]> {
     )
   );
   return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
+}
+
+/** Fetch a single product by ID */
+export async function getProductById(id: string): Promise<Product | null> {
+  const snap = await getDoc(doc(db, COLLECTION, id));
+  if (!snap.exists()) return null;
+  return { id: snap.id, ...snap.data() } as Product;
 }
 
 /** Add a new product */

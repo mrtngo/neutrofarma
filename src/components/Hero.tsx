@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -29,12 +30,13 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-5 pt-4">
-            <button
+            <Link
+              href="/tienda"
               className="bg-white text-[#0A192F] px-10 py-5 font-black rounded-full shadow-2xl hover:bg-slate-100 transition-all active:scale-95 uppercase text-sm tracking-wider cursor-pointer"
               style={{ fontFamily: "var(--font-lexend, Lexend)" }}
             >
               Ver Colección
-            </button>
+            </Link>
             <button
               className="border border-white/30 text-white px-10 py-5 font-black rounded-full hover:bg-white/10 transition-all uppercase text-sm tracking-wider cursor-pointer"
               style={{ fontFamily: "var(--font-lexend, Lexend)" }}
