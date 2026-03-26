@@ -101,13 +101,11 @@ export async function getBanners(): Promise<Banner[]> {
 
 export async function getActiveBanners(): Promise<Banner[]> {
   const snap = await getDocs(
-    query(
-      collection(db, BANNERS_COLLECTION),
-      where("active", "==", true),
-      orderBy("createdAt", "desc")
-    )
+    query(collection(db, BANNERS_COLLECTION), orderBy("createdAt", "desc"))
   );
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Banner));
+  const allBanners = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Banner));
+  // Filter locally to avoid requiring a Firebase Composite Index
+  return allBanners.filter((b) => b.active);
 }
 
 export async function addBanner(
