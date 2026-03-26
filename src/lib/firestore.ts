@@ -1,0 +1,71 @@
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  orderBy,
+  serverTimestamp,
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "./firebase";
+
+export interface Product {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  imageUrl: string;
+  badge?: string;
+  featured: boolean;
+  createdAt?: Timestamp;
+}
+
+const COLLECTION = "products";
+
+/** Fetch all products (admin use) */
+export async function getProducts(): Promise<Product[]> {
+  const snap = await getDocs(
+    query(collection(db, COLLECTION), orderBy("createdAt", "desc"))
+  );
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
+}
+
+/** Fetch only featured products (homepage) */
+export async function getFeaturedProducts(): Promise<Product[]> {
+  const snap = await getDocs(
+    query(
+      collection(db, COLLECTION),
+      where("featured", "==", true),
+      orderBy("createdAt", "desc")
+    )
+  );
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
+}
+
+/** Add a new product */
+export async function addProduct(
+  data: Omit<Product, "id" | "createdAt">
+): Promise<string> {
+  const ref = await addDoc(collection(db, COLLECTION), {
+    ...data,
+    createdAt: serverTimestamp(),
+  });
+  return ref.id;
+}
+
+/** Update an existing product */
+export async function updateProduct(
+  id: string,
+  data: Partial<Omit<Product, "id" | "createdAt">>
+): Promise<void> {
+  await updateDoc(doc(db, COLLECTION, id), data);
+}
+
+/** Delete a product */
+export async function deleteProduct(id: string): Promise<void> {
+  await deleteDoc(doc(db, COLLECTION, id));
+}
