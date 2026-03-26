@@ -153,14 +153,18 @@ export default function AdminPage() {
         setUploadState("done");
       }
 
-      const data = {
+      const data: Omit<Product, "id" | "createdAt"> = {
         name: form.name.trim(),
         category: form.category.trim(),
         price: parseInt(form.price.replace(/\D/g, ""), 10),
         imageUrl,
-        badge: form.badge.trim() || undefined,
         featured: form.featured,
       };
+      
+      const badgeText = form.badge.trim();
+      if (badgeText) {
+        data.badge = badgeText;
+      }
 
       if (editingId) {
         await updateProduct(editingId, data);
