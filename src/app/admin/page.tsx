@@ -11,6 +11,7 @@ import {
 } from "@/lib/firestore";
 import { uploadProductImage } from "@/lib/storage";
 import { formatCOP } from "@/lib/currency";
+import BannersTab from "./BannersTab";
 
 const EMPTY_FORM = {
   name: "",
@@ -30,6 +31,9 @@ export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [authError, setAuthError] = useState(false);
+
+  // ── Tabs ──────────────────────────────────────────────────────────────────
+  const [activeTab, setActiveTab] = useState<"products" | "banners">("products");
 
   // ── Products ─────────────────────────────────────────────────────────────
   const [products, setProducts] = useState<Product[]>([]);
@@ -251,7 +255,33 @@ export default function AdminPage() {
         </button>
       </header>
 
-      <div className="max-w-5xl mx-auto px-6 py-12 space-y-12">
+      <div className="max-w-5xl mx-auto px-6 py-10">
+        
+        {/* Tab Switcher */}
+        <div className="flex gap-6 border-b border-slate-200 mb-10">
+          <button 
+            onClick={() => setActiveTab("products")} 
+            className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${
+              activeTab === "products" ? "text-[#0A192F]" : "text-slate-400 hover:text-slate-600"
+            }`}
+            style={{ fontFamily: "var(--font-lexend, Lexend)" }}
+          >
+            Productos
+            {activeTab === "products" && <span className="absolute bottom-[-1px] left-0 w-full h-[2px] bg-[#0A192F]" />}
+          </button>
+          
+          <button 
+            onClick={() => setActiveTab("banners")} 
+            className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${
+              activeTab === "banners" ? "text-[#0A192F]" : "text-slate-400 hover:text-slate-600"
+            }`}
+            style={{ fontFamily: "var(--font-lexend, Lexend)" }}
+          >
+            Banners Slider
+            {activeTab === "banners" && <span className="absolute bottom-[-1px] left-0 w-full h-[2px] bg-[#0A192F]" />}
+          </button>
+        </div>
+
         {/* Toast */}
         {message && (
           <div className={`fixed top-6 right-6 z-50 px-6 py-3 rounded-2xl font-bold text-sm shadow-xl ${message.ok ? "bg-[#0A192F] text-white" : "bg-red-500 text-white"}`}>
@@ -259,11 +289,13 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* ── Form ──────────────────────────────────────────────────────────── */}
-        <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
-          <h2 className="text-xl font-black text-[#0A192F] mb-8" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
-            {editingId ? "Editar Producto" : "Agregar Nuevo Producto"}
-          </h2>
+        {activeTab === "products" ? (
+          <div className="space-y-12">
+            {/* ── Form ──────────────────────────────────────────────────────────── */}
+            <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+              <h2 className="text-xl font-black text-[#0A192F] mb-8" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+                {editingId ? "Editar Producto" : "Agregar Nuevo Producto"}
+              </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Image drop zone */}
@@ -508,26 +540,30 @@ export default function AdminPage() {
             </div>
           )}
         </section>
-      </div>
 
-      {/* Delete confirmation modal */}
-      {deleteConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-6">
-          <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center space-y-6">
-            <span className="material-symbols-outlined text-red-500 text-5xl">warning</span>
-            <h3 className="font-black text-xl text-[#0A192F]" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>¿Eliminar producto?</h3>
-            <p className="text-slate-500 text-sm">Esta acción no se puede deshacer.</p>
-            <div className="flex gap-4">
-              <button onClick={() => setDeleteConfirm(null)} className="flex-1 border border-slate-200 py-3 rounded-full font-black text-xs tracking-widest uppercase hover:bg-slate-50" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
-                Cancelar
-              </button>
-              <button onClick={() => handleDelete(deleteConfirm)} className="flex-1 bg-red-500 text-white py-3 rounded-full font-black text-xs tracking-widest uppercase hover:bg-red-600" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
-                Eliminar
-              </button>
+        {/* Delete confirmation modal */}
+        {deleteConfirm && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-6">
+            <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center space-y-6">
+              <span className="material-symbols-outlined text-red-500 text-5xl">warning</span>
+              <h3 className="font-black text-xl text-[#0A192F]" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>¿Eliminar producto?</h3>
+              <p className="text-slate-500 text-sm">Esta acción no se puede deshacer.</p>
+              <div className="flex gap-4">
+                <button onClick={() => setDeleteConfirm(null)} className="flex-1 border border-slate-200 py-3 rounded-full font-black text-xs tracking-widest uppercase hover:bg-slate-50" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+                  Cancelar
+                </button>
+                <button onClick={() => handleDelete(deleteConfirm)} className="flex-1 bg-red-500 text-white py-3 rounded-full font-black text-xs tracking-widest uppercase hover:bg-red-600" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+                  Eliminar
+                </button>
+              </div>
             </div>
           </div>
+        )}
         </div>
-      )}
+        ) : (
+          <BannersTab showMessage={showMessage} />
+        )}
+      </div>
     </div>
   );
 }

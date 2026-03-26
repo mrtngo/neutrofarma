@@ -28,7 +28,16 @@ export interface Product {
   createdAt?: Timestamp;
 }
 
+export interface Banner {
+  id: string;
+  title?: string;
+  imageUrl: string;
+  active: boolean;
+  createdAt?: Timestamp;
+}
+
 const COLLECTION = "products";
+const BANNERS_COLLECTION = "banners";
 
 /** Fetch all products (admin/tienda) */
 export async function getProducts(): Promise<Product[]> {
@@ -79,4 +88,45 @@ export async function updateProduct(
 /** Delete a product */
 export async function deleteProduct(id: string): Promise<void> {
   await deleteDoc(doc(db, COLLECTION, id));
+}
+
+// ── Banners ─────────────────────────────────────────────────────────────────
+
+export async function getBanners(): Promise<Banner[]> {
+  const snap = await getDocs(
+    query(collection(db, BANNERS_COLLECTION), orderBy("createdAt", "desc"))
+  );
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Banner));
+}
+
+export async function getActiveBanners(): Promise<Banner[]> {
+  const snap = await getDocs(
+    query(
+      collection(db, BANNERS_COLLECTION),
+      where("active", "==", true),
+      orderBy("createdAt", "desc")
+    )
+  );
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Banner));
+}
+
+export async function addBanner(
+  data: Omit<Banner, "id" | "createdAt">
+): Promise<string> {
+  const ref = await addDoc(collection(db, BANNERS_COLLECTION), {
+    ...data,
+    createdAt: serverTimestamp(),
+  });
+  return ref.id;
+}
+
+export async function updateBanner(
+  id: string,
+  data: Partial<Omit<Banner, "id" | "createdAt">>
+): Promise<void> {
+  await updateDoc(doc(db, BANNERS_COLLECTION, id), data);
+}
+
+export async function deleteBanner(id: string): Promise<void> {
+  await deleteDoc(doc(db, BANNERS_COLLECTION, id));
 }
