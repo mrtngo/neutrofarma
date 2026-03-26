@@ -11,11 +11,12 @@ import ProductTabs from "@/components/ProductTabs";
 export const dynamic = "force-dynamic";
 
 interface DetailsPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function ProductDetailsPage({ params }: DetailsPageProps) {
-  const product = await getProductById(params.id);
+  const { id } = await params;
+  const product = await getProductById(id);
 
   if (!product) {
     notFound();
