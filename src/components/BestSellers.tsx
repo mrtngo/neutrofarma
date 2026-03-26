@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { getFeaturedProducts, Product } from "@/lib/firestore";
 import { formatCOP } from "@/lib/currency";
 import { useCartStore } from "@/lib/store";
@@ -76,7 +77,7 @@ export default function BestSellers() {
 
       <div className="hide-scrollbar flex overflow-x-auto gap-10 px-6 pb-12">
         {products.map((product) => (
-          <div key={product.id} className="min-w-[340px] group cursor-pointer">
+          <Link href={`/tienda/${product.id}`} key={product.id} className="min-w-[340px] group cursor-pointer block">
             <div className="aspect-[4/5] bg-slate-50 rounded-2xl overflow-hidden mb-8 relative transition-all duration-500 border border-slate-100 group-hover:border-[#0A192F]/20 group-hover:shadow-xl group-hover:bg-white">
               <Image
                 src={product.imageUrl}
@@ -120,7 +121,7 @@ export default function BestSellers() {
                 </button>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
