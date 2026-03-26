@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useCartStore } from "@/lib/store";
 
 export default function Header() {
@@ -23,7 +24,14 @@ export default function Header() {
             >
               <span className="material-symbols-outlined text-[#0A192F]">menu_open</span>
             </button>
-            <Link href="/">
+            <Link href="/" className="flex items-center gap-2.5">
+              <Image 
+                src="/logo.jpg" 
+                alt="Neutrofarma Logo" 
+                width={36} 
+                height={36} 
+                className="rounded-full shadow-sm"
+              />
               <h1 className="text-xl font-black text-[#0A192F] tracking-tighter uppercase" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
                 NEUTROFARMA
               </h1>
