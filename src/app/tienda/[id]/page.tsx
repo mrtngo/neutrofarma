@@ -88,21 +88,10 @@ export default async function ProductDetailsPage({ params }: DetailsPageProps) {
                 </h2>
               )}
 
-              {/* Price & Promos */}
-              <div className="flex items-end gap-4 mb-4">
+              {/* Price */}
+              <div className="flex items-end gap-4 mb-8 pb-8 border-b border-slate-200">
                 <span className="text-3xl font-black text-[#0A192F]" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
                   {formatCOP(product.price)}
-                </span>
-                <span className="text-xs font-black text-red-600 uppercase tracking-widest bg-red-50 px-2 py-1 rounded mb-1">
-                  15% OFF EN CARRITO
-                </span>
-              </div>
-
-              {/* Trust Badge Line */}
-              <div className="flex items-center gap-2 mb-8 pb-8 border-b border-slate-200">
-                <span className="material-symbols-outlined text-[#0A192F] text-[18px]">verified</span>
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-                  FÓRMULA CLÍNICA AVALADA
                 </span>
               </div>
 
@@ -118,13 +107,7 @@ export default async function ProductDetailsPage({ params }: DetailsPageProps) {
               </div>
 
               {/* Trust markers */}
-              <div className="mt-10 grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-slate-400 text-lg">verified</span>
-                  </div>
-                  <span className="text-xs font-bold text-slate-500">Calidad Clínica Garantizada</span>
-                </div>
+              <div className="mt-10 flex flex-col gap-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center">
                     <span className="material-symbols-outlined text-slate-400 text-lg">local_shipping</span>
