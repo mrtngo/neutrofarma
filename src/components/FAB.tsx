@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function FAB() {
   return (
     <Link 
-      href="https://wa.me/573000000000?text=Hola,%20estoy%20buscando%20asesor%C3%ADa%20sobre%20los%20suplementos%20Neutrofarma." 
+      href="https://wa.me/573052300587?text=Hola,%20estoy%20buscando%20asesor%C3%ADa%20sobre%20los%20suplementos%20Neutrofarma." 
       target="_blank" 
       rel="noopener noreferrer"
       className="fixed bottom-8 right-8 hidden md:flex bg-[#25D366] text-white w-16 h-16 rounded-full shadow-2xl items-center justify-center hover:scale-110 active:scale-95 transition-all z-40 group border border-white/20 cursor-pointer"

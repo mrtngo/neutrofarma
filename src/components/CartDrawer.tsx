@@ -24,7 +24,7 @@ export default function CartDrawer() {
     message += `\n*TOTAL: ${formatCOP(getTotalPrice())}*\n\nPor favor indíquenme los pasos para el pago.`;
     
     // Replace 573000000000 with the actual phone number
-    const waLink = `https://wa.me/573000000000?text=${encodeURIComponent(message)}`;
+    const waLink = `https://wa.me/573052300587?text=${encodeURIComponent(message)}`;
     window.open(waLink, "_blank");
   };
 
