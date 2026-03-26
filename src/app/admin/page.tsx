@@ -17,7 +17,9 @@ const EMPTY_FORM = {
   category: "",
   price: "",
   badge: "",
+  subtitle: "",
   description: "",
+  benefits: "",
   featured: true,
 };
 
@@ -119,7 +121,9 @@ export default function AdminPage() {
       category: p.category,
       price: String(p.price),
       badge: p.badge ?? "",
+      subtitle: p.subtitle ?? "",
       description: p.description ?? "",
+      benefits: p.benefits?.join("\n") ?? "",
       featured: p.featured,
     });
     setImageFile(null);
@@ -164,13 +168,17 @@ export default function AdminPage() {
       };
       
       const badgeText = form.badge.trim();
-      if (badgeText) {
-        data.badge = badgeText;
-      }
+      if (badgeText) data.badge = badgeText;
+      
+      const subText = form.subtitle.trim();
+      if (subText) data.subtitle = subText;
       
       const descText = form.description.trim();
-      if (descText) {
-        data.description = descText;
+      if (descText) data.description = descText;
+
+      const benText = form.benefits.trim();
+      if (benText) {
+        data.benefits = benText.split("\n").map(b => b.trim()).filter(b => b.length > 0);
       }
 
       if (editingId) {
@@ -376,15 +384,38 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Descripción (opcional)</label>
-              <textarea
-                value={form.description}
-                onChange={(e) => setForm({ ...form, description: e.target.value })}
-                placeholder="Beneficios, modo de uso, etc."
-                rows={3}
+            <div className="space-y-1.5 md:col-span-2">
+              <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Subtítulo (opcional)</label>
+              <input
+                value={form.subtitle}
+                onChange={(e) => setForm({ ...form, subtitle: e.target.value })}
+                placeholder="PROVEN SIZE, STRENGTH & PERFORMANCE ENHANCER"
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
               />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="space-y-1.5">
+                <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Descripción (opcional)</label>
+                <textarea
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  placeholder="Texto descriptivo del producto..."
+                  rows={4}
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Beneficios (Uno por línea)</label>
+                <textarea
+                  value={form.benefits}
+                  onChange={(e) => setForm({ ...form, benefits: e.target.value })}
+                  placeholder="Boosts Strength...&#10;Promotes Muscle...&#10;Enhances Endurance..."
+                  rows={4}
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm flex-nowrap whitespace-pre focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+                />
+              </div>
             </div>
 
             {/* Featured toggle */}

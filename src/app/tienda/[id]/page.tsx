@@ -6,6 +6,7 @@ import { formatCOP } from "@/lib/currency";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AddToCartButton from "@/components/AddToCartButton";
+import ProductTabs from "@/components/ProductTabs";
 
 export const dynamic = "force-dynamic";
 
@@ -56,35 +57,56 @@ export default async function ProductDetailsPage({ params }: DetailsPageProps) {
 
             {/* Right: Info */}
             <div className="flex flex-col justify-center">
-              <div className="mb-6">
-                <p className="text-xs text-slate-500 font-black uppercase tracking-[0.2em] mb-4">
-                  {product.category}
-                </p>
+              
+              {/* Title & Rating */}
+              <div className="mb-3">
                 <h1 
-                  className="text-4xl md:text-5xl lg:text-6xl font-black text-[#0A192F] leading-[1.1]"
+                  className="text-4xl md:text-5xl font-black text-[#0A192F] leading-tight tracking-tighter uppercase"
                   style={{ fontFamily: "var(--font-lexend, Lexend)" }}
                 >
                   {product.name}
                 </h1>
+                <div className="flex items-center gap-2 mt-3">
+                  <div className="flex text-amber-400 text-sm">
+                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star_half</span>
+                  </div>
+                  <span className="text-xs font-bold text-[#0A192F] tracking-wide mt-0.5">
+                    4.9 basado en 255 reseñas
+                  </span>
+                </div>
               </div>
 
-              <div className="mb-8">
-                <span className="text-3xl md:text-4xl font-black text-[#0A192F]" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+              {/* Subtitle */}
+              {product.subtitle && (
+                <h2 className="text-base font-black text-[#0A192F] uppercase tracking-wide leading-snug mb-3 max-w-lg">
+                  {product.subtitle}
+                </h2>
+              )}
+
+              {/* Price & Promos */}
+              <div className="flex items-end gap-4 mb-4">
+                <span className="text-3xl font-black text-[#0A192F]" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
                   {formatCOP(product.price)}
                 </span>
-                <p className="text-sm font-bold text-slate-400 mt-2">Envío gratis a partir de $200.000 COP</p>
+                <span className="text-xs font-black text-red-600 uppercase tracking-widest bg-red-50 px-2 py-1 rounded mb-1">
+                  15% OFF EN CARRITO
+                </span>
               </div>
 
-              <div className="w-full h-px bg-slate-100 mb-8" />
+              {/* Trust Badge Line */}
+              <div className="flex items-center gap-2 mb-8 pb-8 border-b border-slate-200">
+                <span className="material-symbols-outlined text-[#0A192F] text-[18px]">verified</span>
+                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  FÓRMULA CLÍNICA AVALADA
+                </span>
+              </div>
 
-              {/* Description */}
-              {product.description && (
-                <div className="mb-10 prose prose-slate">
-                  <p className="text-slate-600 leading-relaxed font-medium">
-                    {product.description}
-                  </p>
-                </div>
-              )}
+              {/* Dynamic Tabs (Benefits / Description) */}
+              <ProductTabs benefits={product.benefits} description={product.description} />
 
               {/* Add to Cart Actions */}
               <div className="flex flex-col gap-4">

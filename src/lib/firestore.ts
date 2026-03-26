@@ -21,7 +21,9 @@ export interface Product {
   price: number;
   imageUrl: string;
   badge?: string;
+  subtitle?: string;
   description?: string;
+  benefits?: string[];
   featured: boolean;
   createdAt?: Timestamp;
 }
