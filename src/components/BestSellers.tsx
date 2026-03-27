@@ -17,7 +17,32 @@ export default function BestSellers() {
       .catch((err) => console.error(err));
   }, []);
 
-  if (products.length === 0) return null;
+  if (products.length === 0) {
+    return (
+      <section className="py-32 bg-white">
+        <div className="container mx-auto px-6 mb-16">
+          <span className="text-[#0A192F] font-black text-xs tracking-[0.3em] uppercase mb-3 block">
+            Stacks Esenciales
+          </span>
+          <h3
+            className="text-4xl lg:text-5xl font-black text-[#0A192F]"
+            style={{ fontFamily: "var(--font-lexend, Lexend)" }}
+          >
+            Los Más Buscados
+          </h3>
+        </div>
+        <div className="container mx-auto px-6 text-center py-20 border-t border-slate-100">
+           <span className="material-symbols-outlined text-4xl text-slate-300 mb-4 block">inventory_2</span>
+           <h3 className="text-xl font-bold text-[#0A192F]" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+             Aún no hay productos destacados
+           </h3>
+           <p className="text-slate-500 mt-2 text-sm">
+             Añade productos desde el admin y márcalos como "Destacado en homepage" para que aparezcan aquí.
+           </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-32 bg-white">

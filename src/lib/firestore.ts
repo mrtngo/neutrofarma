@@ -53,14 +53,11 @@ export async function getProducts(): Promise<Product[]> {
 /** Fetch only featured products (homepage) */
 export async function getFeaturedProducts(): Promise<Product[]> {
   const snap = await getDocs(
-    query(
-      collection(db, COLLECTION),
-      where("featured", "==", true),
-      orderBy("createdAt", "desc")
-    )
+    query(collection(db, COLLECTION), orderBy("createdAt", "desc"))
   );
-  const products = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
-  return products.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+  const allProducts = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
+  const featured = allProducts.filter((p) => p.featured);
+  return featured.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 }
 
 /** Fetch a single product by ID */
