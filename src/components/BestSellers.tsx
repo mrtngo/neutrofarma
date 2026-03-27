@@ -7,49 +7,17 @@ import { getFeaturedProducts, Product } from "@/lib/firestore";
 import { formatCOP } from "@/lib/currency";
 import { useCartStore } from "@/lib/store";
 
-// Fallback products shown while Firebase isn't configured
-const FALLBACK: Product[] = [
-  {
-    id: "1",
-    category: "Alto Rendimiento Clínico",
-    name: "Iso-Whey Platinum",
-    price: 65,
-    badge: "Nuevo",
-    imageUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDCDx3iw7CwO8HojHV88VnhPwItNajGbLZNCkOpGmImhrva3xrBNIJ_Yj45BqbXj9Ifrm3O-v3pK1sP5pCp3CK12QN8ItPYZR3BqXpV7ORaZ0Hmg99n98WeV2_fF-GwLTpesuRbKbzAz0vLqDR4c7PS7jjkfP4SoDLhfHEkhfXuqoG72bznclqDiIs-5hrEjQZkqwJ9jPMkIkjpKFhNsEZRLBO2QV47GRs8_f7Z_1d7ex1PASec6DgdrVU6VjyuGGVmS8V4bdKEinI",
-    featured: true,
-  },
-  {
-    id: "2",
-    category: "Neuro-Cognitivo",
-    name: "Ignition Pre-Entrenamiento",
-    price: 49,
-    imageUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDBB6nCBzNe_ObFU3l2LeYFzUZC3lhR6E_dbKiU7q3CYqTIJ9PMFxMd6sjoBu6NIB0glr_DldBFM7XCUA8lIVb3hJ1IdOPDpVZKm0-OJ3SirOSdY1qDuoQd793rhSm7UNxbvYhZD05tGKQJLNrQ6b7Zth2qP35B2QZv7pyLJzABlOLeFey6YyS9tzlWgrgosIz9YzjATRG-81elwrW58qY6qD3Zibja8FKlj-dl6dxa0QmcPd8RtGnUWbGIJtXaKOrrw-ztN_WFqfM",
-    featured: true,
-  },
-  {
-    id: "3",
-    category: "Salud Fundamental",
-    name: "Bio-Multi Diario",
-    price: 35,
-    imageUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuA3Ob6y97G-kshenK0NSsn0ijq1CyC0JKUkAkMfMRexokbzVC4U_wPMjB2hh_hZcLB67vjT3i-f7esRWwK4AgnAhrPdb3ESEZA_6XHYZTiEW9jGbe5jcfVdRRwo7AkEV4Kc9bOsXR1JvWNgPv6fKjYRDb71fodc80aqZgdAojyOiLX2T4jm_Px8_0sJcZXUWLHXGJQT4quJkw17gxfhfPXpotT6ZEfITFoD9A6R38MtvKcsztOO0DtGjX8QvHpQTjMhrFDBCWdlgr4",
-    featured: true,
-  },
-];
-
 export default function BestSellers() {
-  const [products, setProducts] = useState<Product[]>(FALLBACK);
-  const configured = !!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+  const [products, setProducts] = useState<Product[]>([]);
   const { addItem } = useCartStore();
 
   useEffect(() => {
-    if (!configured) return;
     getFeaturedProducts()
-      .then((data) => { if (data.length > 0) setProducts(data); })
-      .catch(() => {/* keep fallback */});
-  }, [configured]);
+      .then((data) => setProducts(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  if (products.length === 0) return null;
 
   return (
     <section className="py-32 bg-white">
