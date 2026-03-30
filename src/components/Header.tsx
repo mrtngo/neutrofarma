@@ -18,7 +18,7 @@ export default function Header() {
         <nav className="flex items-center justify-between px-6 h-20 w-full max-w-7xl mx-auto">
           <div className="flex items-center gap-6">
             <button
-              className="p-2 hover:bg-slate-50 rounded-full transition-colors active:scale-95"
+              className="p-2 hover:bg-slate-50 rounded-full transition-colors active:scale-95 md:hidden"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Menú"
             >
