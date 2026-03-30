@@ -1,7 +1,71 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getHomepageSettings, saveHomepageSettings, HomepageSettings } from "@/lib/settings";
+import { uploadProductImage } from "@/lib/storage";
+import Image from "next/image";
+
+function ImageUploader({ value, onChange, label }: { value: string; onChange: (url: string) => void; label: string; }) {
+  const [uploadState, setUploadState] = useState<"idle" | "uploading" | "error">("idle");
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFile = async (file: File) => {
+    if (!file.type.startsWith("image/")) return;
+    setUploadState("uploading");
+    try {
+      const url = await uploadProductImage(file, setUploadProgress);
+      onChange(url);
+      setUploadState("idle");
+    } catch (err) {
+      console.error(err);
+      setUploadState("error");
+    }
+  };
+
+  return (
+    <div className="space-y-1.5 md:col-span-2">
+      <label className="text-xs font-black text-slate-500 uppercase tracking-widest">{label}</label>
+      {value ? (
+        <div className="relative w-full aspect-[5/3] md:aspect-[3/1] rounded-2xl overflow-hidden bg-slate-50 border border-slate-200">
+          <Image src={value} alt="Preview" fill className="object-cover opacity-60" unoptimized />
+          <button type="button" onClick={() => onChange("")} className="absolute top-4 right-4 bg-white/90 hover:bg-white text-slate-700 rounded-full p-2 shadow-lg transition-colors z-10" aria-label="Quitar">
+            <span className="material-symbols-outlined text-xl leading-none">delete</span>
+          </button>
+        </div>
+      ) : (
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={(e) => { e.preventDefault(); setDragging(false); const file = e.dataTransfer.files?.[0]; if (file) handleFile(file); }}
+          onClick={() => uploadState !== "uploading" && fileInputRef.current?.click()}
+          className={`w-full h-40 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-3 cursor-pointer transition-all select-none
+            ${dragging ? "border-[#0A192F] bg-slate-100" : "border-slate-200 bg-slate-50 hover:bg-slate-100"}`}
+        >
+          {uploadState === "uploading" ? (
+            <div className="flex flex-col items-center gap-2 w-full px-12">
+              <span className="material-symbols-outlined text-[#0A192F] text-4xl animate-bounce">cloud_upload</span>
+              <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div className="h-full bg-[#0A192F] transition-all" style={{ width: `${uploadProgress}%` }} />
+              </div>
+              <p className="text-xs font-bold text-slate-500">Subiendo... {uploadProgress}%</p>
+            </div>
+          ) : (
+            <>
+              <span className="material-symbols-outlined text-slate-400 text-4xl">add_photo_alternate</span>
+              <div className="text-center">
+                <p className="font-bold text-slate-600 text-sm">Arrastra una imagen aquí o haz clic</p>
+                {uploadState === "error" && <p className="text-xs text-red-500 mt-1">Error al subir imagen</p>}
+              </div>
+            </>
+          )}
+          <input ref={fileInputRef} type="file" accept="image/*" onChange={(e) => { const file = e.target.files?.[0]; if (file) { handleFile(file); e.target.value = ""; } }} className="hidden" />
+        </div>
+      )}
+    </div>
+  );
+}
 
 interface SettingsTabProps {
   showMessage: (text: string, ok?: boolean) => void;
@@ -121,10 +185,11 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Subtítulo</label>
             <input value={settings.cat1Subtitle} onChange={(e) => handleChange("cat1Subtitle", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
           </div>
-          <div className="space-y-1.5 md:col-span-2">
-            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">URL de Imagen</label>
-            <input value={settings.cat1Image} onChange={(e) => handleChange("cat1Image", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
-          </div>
+          <ImageUploader 
+            label="Imagen de Fondo" 
+            value={settings.cat1Image} 
+            onChange={(url) => handleChange("cat1Image", url)} 
+          />
         </div>
 
         {/* Cat 2 */}
@@ -138,10 +203,11 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Subtítulo</label>
             <input value={settings.cat2Subtitle} onChange={(e) => handleChange("cat2Subtitle", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
           </div>
-          <div className="space-y-1.5 md:col-span-2">
-            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">URL de Imagen</label>
-            <input value={settings.cat2Image} onChange={(e) => handleChange("cat2Image", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
-          </div>
+          <ImageUploader 
+            label="Imagen de Fondo" 
+            value={settings.cat2Image} 
+            onChange={(url) => handleChange("cat2Image", url)} 
+          />
         </div>
 
         {/* Cat 3 */}
