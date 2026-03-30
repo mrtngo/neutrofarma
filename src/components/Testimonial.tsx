@@ -29,22 +29,6 @@ export default function Testimonial() {
               &ldquo;En medicina profesional, la transparencia es innegociable. NEUTROFARMA establece el estándar de oro en eficacia clínica.&rdquo;
             </blockquote>
 
-            <div className="flex items-center gap-6">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSiDK664BQWSPT5HzuGaDch8Exx39hfaBK5KOmHqZFhPhP5EZBh3z9l5fWMhzuLL9p1UCpx4f8uyTvDeV27c3VuXC1zeczngfLQenZLGQgjJ-IzrGDPhk-KbjzVX-sps0KJumv7FQAdx8zgaaClV6253EcUay8GI5eF6LVaHdEcADs-zWLOezzmi1s1lCqwQbE5u16pGNKpBZlflwv1cbZlBJPUnprORZVGb_vdh8TgaHgQryaBHjVArHMVC5RRfXSonRWbLmlidQ"
-                alt="Retrato de profesional médico"
-                width={80}
-                height={80}
-                className="w-20 h-20 rounded-full object-cover grayscale border-2 border-slate-100"
-                unoptimized
-              />
-              <div>
-                <p className="font-black text-[#0A192F] text-lg">Dra. Elena Rodríguez</p>
-                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
-                  Jefa de Medicina Deportiva
-                </p>
-              </div>
-            </div>
           </div>
 
           {/* Stats */}
