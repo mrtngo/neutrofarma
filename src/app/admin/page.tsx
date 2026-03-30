@@ -12,6 +12,7 @@ import {
 import { uploadProductImage } from "@/lib/storage";
 import { formatCOP } from "@/lib/currency";
 import BannersTab from "./BannersTab";
+import SettingsTab from "./SettingsTab";
 
 const EMPTY_FORM = {
   name: "",
@@ -34,7 +35,7 @@ export default function AdminPage() {
   const [authError, setAuthError] = useState(false);
 
   // ── Tabs ──────────────────────────────────────────────────────────────────
-  const [activeTab, setActiveTab] = useState<"products" | "banners">("products");
+  const [activeTab, setActiveTab] = useState<"products" | "banners" | "settings">("products");
 
   // ── Products ─────────────────────────────────────────────────────────────
   const [products, setProducts] = useState<Product[]>([]);
@@ -282,6 +283,17 @@ export default function AdminPage() {
           >
             Banners Slider
             {activeTab === "banners" && <span className="absolute bottom-[-1px] left-0 w-full h-[2px] bg-[#0A192F]" />}
+          </button>
+
+          <button 
+            onClick={() => setActiveTab("settings")} 
+            className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${
+              activeTab === "settings" ? "text-[#0A192F]" : "text-slate-400 hover:text-slate-600"
+            }`}
+            style={{ fontFamily: "var(--font-lexend, Lexend)" }}
+          >
+            Configuración Pág Principal
+            {activeTab === "settings" && <span className="absolute bottom-[-1px] left-0 w-full h-[2px] bg-[#0A192F]" />}
           </button>
         </div>
 
@@ -576,8 +588,10 @@ export default function AdminPage() {
           </div>
         )}
         </div>
-        ) : (
+        ) : activeTab === "banners" ? (
           <BannersTab showMessage={showMessage} />
+        ) : (
+          <SettingsTab showMessage={showMessage} />
         )}
       </div>
     </div>

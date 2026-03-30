@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { getHomepageSettings } from "@/lib/settings";
 
-export default function Testimonial() {
+export default async function Testimonial() {
+  const settings = await getHomepageSettings();
+
   return (
     <section className="py-32 bg-white overflow-hidden">
       <div className="container mx-auto px-6">
@@ -26,7 +29,7 @@ export default function Testimonial() {
               className="text-3xl md:text-5xl font-extrabold text-[#0A192F] leading-tight italic"
               style={{ fontFamily: "var(--font-lexend, Lexend)" }}
             >
-              &ldquo;En medicina profesional, la transparencia es innegociable. NEUTROFARMA establece el estándar de oro en eficacia clínica.&rdquo;
+              &ldquo;{settings.testimonialQuote}&rdquo;
             </blockquote>
 
           </div>
@@ -38,13 +41,13 @@ export default function Testimonial() {
                 className="text-5xl font-black text-[#0A192F]"
                 style={{ fontFamily: "var(--font-lexend, Lexend)" }}
               >
-                99.9%
+                {settings.testimonialStat1Value}
               </p>
               <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
-                Bio-Disponibilidad
+                {settings.testimonialStat1Label}
               </p>
               <p className="text-sm font-medium leading-relaxed pt-2">
-                Tasa de absorción máxima verificada mediante análisis de suero clínico de terceros.
+                {settings.testimonialStat1Desc}
               </p>
             </div>
             <div className="bg-[#0A192F] p-10 rounded-3xl space-y-4 shadow-xl">
@@ -52,13 +55,13 @@ export default function Testimonial() {
                 className="text-5xl font-black text-white"
                 style={{ fontFamily: "var(--font-lexend, Lexend)" }}
               >
-                0.00%
+                {settings.testimonialStat2Value}
               </p>
               <p className="text-[10px] font-black text-white/60 uppercase tracking-[0.3em]">
-                Rellenos Artificiales
+                {settings.testimonialStat2Label}
               </p>
               <p className="text-sm font-medium leading-relaxed text-white/80 pt-2">
-                Nuestro compromiso con la ciencia limpia significa cero aditivos, cero rellenos, cero compromisos.
+                {settings.testimonialStat2Desc}
               </p>
             </div>
           </div>
