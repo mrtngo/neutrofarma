@@ -99,6 +99,33 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
 
   return (
     <div className="space-y-12">
+      {/* SEO Section */}
+      <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+        <h2 className="text-xl font-black text-[#0A192F] mb-8" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+          SEO (Metadatos Web)
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Título del Sitio (Pestaña del Navegador)</label>
+            <input
+              value={settings.siteTitle}
+              onChange={(e) => handleChange("siteTitle", e.target.value)}
+              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+            />
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Descripción del Sitio (Google y Redes Sociales)</label>
+            <textarea
+              value={settings.siteDescription}
+              onChange={(e) => handleChange("siteDescription", e.target.value)}
+              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+              rows={2}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonial Section */}
       <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
         <h2 className="text-xl font-black text-[#0A192F] mb-8" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
           Sección: Testimonio (Socio Elite)

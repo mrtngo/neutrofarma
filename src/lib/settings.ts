@@ -2,6 +2,10 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 export interface HomepageSettings {
+  // SEO
+  siteTitle: string;
+  siteDescription: string;
+
   // Testimonial
   testimonialQuote: string;
   testimonialStat1Value: string;
@@ -30,6 +34,9 @@ export interface HomepageSettings {
 }
 
 const DEFAULT_SETTINGS: HomepageSettings = {
+  siteTitle: "NEUTROFARMA | Nutrición Clínica de Elite",
+  siteDescription: "NEUTROFARMA entrega nutrición de grado clínico para el estilo de vida de alto rendimiento. Precisión científica, pureza verificada.",
+
   testimonialQuote: "En medicina profesional, la transparencia es innegociable. NEUTROFARMA establece el estándar de oro en eficacia clínica.",
   testimonialStat1Value: "99.9%",
   testimonialStat1Label: "Bio-Disponibilidad",

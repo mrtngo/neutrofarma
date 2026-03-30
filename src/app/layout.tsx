@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lexend, Manrope } from "next/font/google";
 import "./globals.css";
 import CartDrawer from "@/components/CartDrawer";
+import { getHomepageSettings } from "@/lib/settings";
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -15,17 +16,20 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
-export const metadata: Metadata = {
-  title: "NEUTROFARMA | Nutrición Clínica de Elite",
-  description:
-    "NEUTROFARMA entrega nutrición de grado clínico para el estilo de vida de alto rendimiento. Precisión científica, pureza verificada.",
-  keywords: ["suplementos", "proteínas", "vitaminas", "bienestar", "nutrición deportiva", "neutrofarma"],
-  openGraph: {
-    title: "NEUTROFARMA | Nutrición Clínica de Elite",
-    description: "Ciencia pura. Vitalidad máxima.",
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getHomepageSettings();
+  
+  return {
+    title: settings.siteTitle,
+    description: settings.siteDescription,
+    keywords: ["suplementos", "proteínas", "vitaminas", "bienestar", "nutrición deportiva", "neutrofarma"],
+    openGraph: {
+      title: settings.siteTitle,
+      description: settings.siteDescription,
+      type: "website",
+    },
+  };
+}
 
 export default function RootLayout({
   children,
