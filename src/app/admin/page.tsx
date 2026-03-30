@@ -304,7 +304,7 @@ export default function AdminPage() {
             {/* Image drop zone */}
             <div className="space-y-2">
               <label className="text-xs font-black text-slate-500 uppercase tracking-widest block">
-                Imagen del Producto {!editingId && "*"}
+                Imagen del Producto {!editingId && "*"} <span className="text-[10px] text-slate-400 font-normal normal-case ml-2">(Proporción 4:5, Ej: 800x1000px para que queden centradas)</span>
               </label>
 
               {imagePreview ? (

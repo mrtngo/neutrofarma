@@ -8,8 +8,17 @@ import Footer from "@/components/Footer";
 // Force dynamic fetch so we get live products
 export const dynamic = "force-dynamic";
 
-export default async function TiendaPage() {
-  const products = await getProducts();
+interface TiendaPageProps {
+  searchParams: Promise<{ c?: string }>;
+}
+
+export default async function TiendaPage({ searchParams }: TiendaPageProps) {
+  const { c: category } = await searchParams;
+  let products = await getProducts();
+
+  if (category) {
+    products = products.filter((p) => p.category === category);
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -26,7 +35,7 @@ export default async function TiendaPage() {
               className="text-4xl lg:text-5xl font-black text-[#0A192F]" 
               style={{ fontFamily: "var(--font-lexend, Lexend)" }}
             >
-              Nuestros Productos
+              {category ? `Categoría: ${category}` : "Nuestros Productos"}
             </h1>
           </div>
 
