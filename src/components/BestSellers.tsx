@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getFeaturedProducts, Product } from "@/lib/firestore";
@@ -10,6 +10,17 @@ import { useCartStore } from "@/lib/store";
 export default function BestSellers() {
   const [products, setProducts] = useState<Product[]>([]);
   const { addItem } = useCartStore();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const scrollAmount = 380; // card width + gap approximation
+      scrollRef.current.scrollBy({ 
+        left: direction === "left" ? -scrollAmount : scrollAmount, 
+        behavior: "smooth" 
+      });
+    }
+  };
 
   useEffect(() => {
     getFeaturedProducts()
@@ -48,9 +59,6 @@ export default function BestSellers() {
     <section className="py-32 bg-white">
       <div className="container mx-auto px-6 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <span className="text-[#0A192F] font-black text-xs tracking-[0.3em] uppercase mb-3 block">
-            Stacks Esenciales
-          </span>
           <h3
             className="text-4xl lg:text-5xl font-black text-[#0A192F]"
             style={{ fontFamily: "var(--font-lexend, Lexend)" }}
@@ -59,18 +67,24 @@ export default function BestSellers() {
           </h3>
         </div>
         <div className="flex gap-3">
-          <button className="w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-all active:scale-90" aria-label="Anterior">
+          <button 
+            onClick={() => scroll("left")}
+            className="w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-all active:scale-90" aria-label="Anterior"
+          >
             <span className="material-symbols-outlined text-[#0A192F]">arrow_back_ios_new</span>
           </button>
-          <button className="w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-all active:scale-90" aria-label="Siguiente">
+          <button 
+            onClick={() => scroll("right")}
+            className="w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-all active:scale-90" aria-label="Siguiente"
+          >
             <span className="material-symbols-outlined text-[#0A192F]">arrow_forward_ios</span>
           </button>
         </div>
       </div>
 
-      <div className="hide-scrollbar flex overflow-x-auto gap-10 px-6 pb-12">
+      <div ref={scrollRef} className="hide-scrollbar flex overflow-x-auto gap-10 px-6 pb-12 snap-x snap-mandatory">
         {products.map((product) => (
-          <Link href={`/tienda/${product.id}`} key={product.id} className="min-w-[340px] group cursor-pointer block">
+          <Link href={`/tienda/${product.id}`} key={product.id} className="min-w-[340px] max-w-[340px] group cursor-pointer block snap-start">
             <div className="aspect-[4/5] bg-slate-50 rounded-2xl overflow-hidden mb-8 relative transition-all duration-500 border border-slate-100 group-hover:border-[#0A192F]/20 group-hover:shadow-xl group-hover:bg-white">
               <Image
                 src={product.imageUrl}
