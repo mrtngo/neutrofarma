@@ -31,6 +31,11 @@ export interface HomepageSettings {
 
   cat4Title: string;
   cat4Link: string;
+
+  // Tracking
+  gtmId?: string;
+  gaId?: string;
+  metaPixelId?: string;
 }
 
 const DEFAULT_SETTINGS: HomepageSettings = {
@@ -60,6 +65,10 @@ const DEFAULT_SETTINGS: HomepageSettings = {
   
   cat4Title: "Equipamiento",
   cat4Link: "/tienda?c=Equipamiento",
+
+  gtmId: "",
+  gaId: "",
+  metaPixelId: "",
 };
 
 export async function getHomepageSettings(): Promise<HomepageSettings> {

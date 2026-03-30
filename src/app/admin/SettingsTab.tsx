@@ -264,6 +264,42 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
         </div>
       </section>
 
+      {/* Tracking Section */}
+      <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+        <h2 className="text-xl font-black text-[#0A192F] mb-8" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+          Tracking & Analítica
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Google Tag Manager ID (GTM-XXXXXXX)</label>
+            <input
+              value={settings.gtmId || ""}
+              onChange={(e) => handleChange("gtmId", e.target.value)}
+              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+              placeholder="GTM-XXXXXXX"
+            />
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Google Analytics 4 ID (G-XXXXXXX)</label>
+            <input
+              value={settings.gaId || ""}
+              onChange={(e) => handleChange("gaId", e.target.value)}
+              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+              placeholder="G-XXXXXXX"
+            />
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Meta Pixel ID</label>
+            <input
+              value={settings.metaPixelId || ""}
+              onChange={(e) => handleChange("metaPixelId", e.target.value)}
+              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+              placeholder="123456789012345"
+            />
+          </div>
+        </div>
+      </section>
+
       <div className="flex justify-end pt-4">
         <button
           onClick={handleSave}
