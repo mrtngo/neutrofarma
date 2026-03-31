@@ -4,7 +4,6 @@ import Categories from "@/components/Categories";
 import Testimonial from "@/components/Testimonial";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import FAB from "@/components/FAB";
 
 export default function Home() {
   return (
@@ -17,7 +16,6 @@ export default function Home() {
         <Testimonial />
         <Footer />
       </main>
-      <FAB />
     </>
   );
 }

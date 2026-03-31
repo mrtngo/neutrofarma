@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lexend, Manrope } from "next/font/google";
 import "./globals.css";
 import CartDrawer from "@/components/CartDrawer";
+import FAB from "@/components/FAB";
 import { getHomepageSettings } from "@/lib/settings";
 import TrackingScripts from "@/components/TrackingScripts";
 
@@ -68,6 +69,7 @@ export default async function RootLayout({
         <TrackingScripts gtmId={settings.gtmId} gaId={settings.gaId} metaPixelId={settings.metaPixelId} />
         {children}
         <CartDrawer />
+        <FAB />
       </body>
     </html>
   );
