@@ -37,7 +37,6 @@ export default function Header() {
                     alt="Neutrofarma Logo" 
                     fill
                     className="object-contain"
-                    unoptimized
                   />
                 </div>
               ) : (

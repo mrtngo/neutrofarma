@@ -90,8 +90,8 @@ export default function BestSellers() {
                 src={product.imageUrl}
                 alt={product.name}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                unoptimized
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
               />
               {product.badge && (
                 <div className="absolute top-5 right-5">

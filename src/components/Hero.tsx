@@ -7,9 +7,9 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { getActiveBanners, Banner } from "@/lib/firestore";
 
-export default function Hero() {
-  const [banners, setBanners] = useState<Banner[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function Hero({ initialBanners }: { initialBanners?: Banner[] }) {
+  const [banners, setBanners] = useState<Banner[]>(initialBanners || []);
+  const [loading, setLoading] = useState(!initialBanners);
   const configured = !!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
 
   const [emblaRef] = useEmblaCarousel({ loop: true, align: "center" }, [
@@ -17,6 +17,7 @@ export default function Hero() {
   ]);
 
   useEffect(() => {
+    if (initialBanners) return;
     if (!configured) {
       setLoading(false);
       return;
@@ -49,9 +50,9 @@ export default function Hero() {
                 src={banner.imageUrl} 
                 alt={banner.title || "Banner Neutrofarma"} 
                 fill 
+                sizes="100vw"
                 className={`object-cover object-center lg:object-[center_30%] ${banner.mobileImageUrl ? 'hidden sm:block' : ''}`}
-                priority
-                unoptimized
+                priority={true}
               />
               {/* Mobile Image */}
               {banner.mobileImageUrl && (
@@ -59,9 +60,9 @@ export default function Hero() {
                   src={banner.mobileImageUrl} 
                   alt={banner.title || "Banner Neutrofarma Celular"} 
                   fill 
+                  sizes="100vw"
                   className="object-cover object-center block sm:hidden"
-                  priority
-                  unoptimized
+                  priority={true}
                 />
               )}
               {/* Overlay shadow for text readability */}

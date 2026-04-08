@@ -28,7 +28,6 @@ export default async function Categories() {
               alt={settings.cat1Title}
               fill
               className="object-cover opacity-60 transition-transform duration-1000 group-hover:scale-105"
-              unoptimized
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/20 to-transparent" />
             <div className="absolute bottom-12 left-12 right-12">
@@ -58,7 +57,6 @@ export default async function Categories() {
               alt={settings.cat2Title}
               fill
               className="object-cover opacity-10 group-hover:scale-110 transition-transform duration-1000"
-              unoptimized
             />
             <div className="absolute inset-0 p-10 flex flex-col justify-end">
               <h4
