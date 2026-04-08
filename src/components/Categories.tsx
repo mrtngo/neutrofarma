@@ -13,10 +13,10 @@ export default async function Categories() {
             className="text-4xl font-black text-[#0A192F] mb-6"
             style={{ fontFamily: "var(--font-lexend, Lexend)" }}
           >
-            Protocolos por Diseño
+            {settings.protocolsTitle}
           </h3>
           <p className="text-slate-500 font-medium text-lg">
-            Sistemas curados para resultados fisiológicos específicos.
+            {settings.protocolsSubtitle}
           </p>
         </div>
 

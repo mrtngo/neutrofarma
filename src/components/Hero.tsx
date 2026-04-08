@@ -44,14 +44,26 @@ export default function Hero() {
         <div className="flex touch-pan-y w-full h-full relative">
           {banners.map((banner) => (
             <div key={banner.id} className="relative flex-[0_0_100%] min-w-0 w-full h-full">
+              {/* Desktop Image */}
               <Image 
                 src={banner.imageUrl} 
                 alt={banner.title || "Banner Neutrofarma"} 
                 fill 
-                className="object-cover object-center lg:object-[center_30%]"
+                className={`object-cover object-center lg:object-[center_30%] ${banner.mobileImageUrl ? 'hidden sm:block' : ''}`}
                 priority
                 unoptimized
               />
+              {/* Mobile Image */}
+              {banner.mobileImageUrl && (
+                <Image 
+                  src={banner.mobileImageUrl} 
+                  alt={banner.title || "Banner Neutrofarma Celular"} 
+                  fill 
+                  className="object-cover object-center block sm:hidden"
+                  priority
+                  unoptimized
+                />
+              )}
               {/* Overlay shadow for text readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,25,47,0.9)] via-[rgba(10,25,47,0.3)] to-transparent pointer-events-none" />
               

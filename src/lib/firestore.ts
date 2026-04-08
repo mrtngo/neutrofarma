@@ -25,7 +25,9 @@ export interface Product {
   description?: string;
   benefits?: string[];
   featured: boolean;
-  order?: number;
+  order?: number; // legacy
+  homepageOrder?: number;
+  categoryOrder?: number;
   createdAt?: Timestamp;
 }
 
@@ -33,6 +35,7 @@ export interface Banner {
   id: string;
   title?: string;
   imageUrl: string;
+  mobileImageUrl?: string;
   active: boolean;
   createdAt?: Timestamp;
 }
@@ -46,8 +49,8 @@ export async function getProducts(): Promise<Product[]> {
     query(collection(db, COLLECTION), orderBy("createdAt", "desc"))
   );
   const products = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
-  // Sort manually by order field
-  return products.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+  // Sort manually by categoryOrder field (or fallback to order)
+  return products.sort((a, b) => (a.categoryOrder ?? a.order ?? 999) - (b.categoryOrder ?? b.order ?? 999));
 }
 
 /** Fetch only featured products (homepage) */
@@ -57,7 +60,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
   );
   const allProducts = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Product));
   const featured = allProducts.filter((p) => p.featured);
-  return featured.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+  return featured.sort((a, b) => (a.homepageOrder ?? a.order ?? 999) - (b.homepageOrder ?? b.order ?? 999));
 }
 
 /** Fetch a single product by ID */

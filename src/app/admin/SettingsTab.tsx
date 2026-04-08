@@ -122,6 +122,11 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
               rows={2}
             />
           </div>
+          <ImageUploader 
+            label="Logo Principal del Sitio" 
+            value={settings.siteLogo || ""} 
+            onChange={(url) => handleChange("siteLogo", url)} 
+          />
         </div>
       </section>
 
@@ -200,6 +205,17 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
         <h2 className="text-xl font-black text-[#0A192F] mb-8" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
           Sección: Categorías (Cuadros de Protocolos)
         </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8 bg-slate-50 p-6 rounded-2xl">
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Título de la Sección</label>
+            <input value={settings.protocolsTitle} onChange={(e) => handleChange("protocolsTitle", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Subtítulo de la Sección</label>
+            <input value={settings.protocolsSubtitle} onChange={(e) => handleChange("protocolsSubtitle", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          </div>
+        </div>
         
         {/* Cat 1 */}
         <h3 className="font-bold text-slate-700 mb-4 pb-2 border-b">1. Cuadro Principal (Izquierda)</h3>
@@ -261,6 +277,63 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Link Categoría (?c=)</label>
             <input value={settings.cat4Link} onChange={(e) => handleChange("cat4Link", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
           </div>
+        </div>
+      </section>
+
+      {/* Footer Section */}
+      <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+        <h2 className="text-xl font-black text-[#0A192F] mb-8" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
+          Pie de Página (Footer)
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[1, 2, 3].map((colNum) => {
+             const titleKey = `footerCol${colNum}Title` as keyof HomepageSettings;
+             const linksKey = `footerCol${colNum}Links` as keyof HomepageSettings;
+             const links = (settings[linksKey] as {label: string, url: string}[]) || [];
+             
+             return (
+               <div key={colNum} className="space-y-4 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                 <h3 className="font-bold text-slate-700 pb-2 border-b">Columna {colNum}</h3>
+                 <div className="space-y-1.5">
+                   <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Título de Columna</label>
+                   <input
+                     value={settings[titleKey] as string || ""}
+                     onChange={(e) => handleChange(titleKey, e.target.value)}
+                     className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none"
+                   />
+                 </div>
+                 <div className="space-y-3 pt-2">
+                   <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Enlaces (Hasta 3)</label>
+                   {[0, 1, 2].map((idx) => (
+                     <div key={idx} className="flex gap-2">
+                       <input
+                         placeholder="Texto"
+                         value={links[idx]?.label || ""}
+                         onChange={(e) => {
+                           const newLinks = [...links];
+                           if (!newLinks[idx]) newLinks[idx] = { label: "", url: "" };
+                           newLinks[idx].label = e.target.value;
+                           handleChange(linksKey, newLinks as any);
+                         }}
+                         className="w-1/2 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none"
+                       />
+                       <input
+                         placeholder="URL (/...)"
+                         value={links[idx]?.url || ""}
+                         onChange={(e) => {
+                           const newLinks = [...links];
+                           if (!newLinks[idx]) newLinks[idx] = { label: "", url: "" };
+                           newLinks[idx].url = e.target.value;
+                           handleChange(linksKey, newLinks as any);
+                         }}
+                         className="w-1/2 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none"
+                       />
+                     </div>
+                   ))}
+                 </div>
+               </div>
+             );
+          })}
         </div>
       </section>
 

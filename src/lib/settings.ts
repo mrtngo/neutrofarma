@@ -2,9 +2,10 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 export interface HomepageSettings {
-  // SEO
+  // SEO & Branding
   siteTitle: string;
   siteDescription: string;
+  siteLogo: string;
 
   // Testimonial
   testimonialQuote: string;
@@ -14,6 +15,10 @@ export interface HomepageSettings {
   testimonialStat2Value: string;
   testimonialStat2Label: string;
   testimonialStat2Desc: string;
+
+  // Protocols Section
+  protocolsTitle: string;
+  protocolsSubtitle: string;
 
   // Categories (Bento)
   cat1Title: string;
@@ -32,6 +37,14 @@ export interface HomepageSettings {
   cat4Title: string;
   cat4Link: string;
 
+  // Footer
+  footerCol1Title: string;
+  footerCol1Links: { label: string; url: string }[];
+  footerCol2Title: string;
+  footerCol2Links: { label: string; url: string }[];
+  footerCol3Title: string;
+  footerCol3Links: { label: string; url: string }[];
+
   // Tracking
   gtmId?: string;
   gaId?: string;
@@ -41,6 +54,7 @@ export interface HomepageSettings {
 const DEFAULT_SETTINGS: HomepageSettings = {
   siteTitle: "NEUTROFARMA | Nutrición Clínica de Elite",
   siteDescription: "NEUTROFARMA entrega nutrición de grado clínico para el estilo de vida de alto rendimiento. Precisión científica, pureza verificada.",
+  siteLogo: "/logo.jpg",
 
   testimonialQuote: "En medicina profesional, la transparencia es innegociable. NEUTROFARMA establece el estándar de oro en eficacia clínica.",
   testimonialStat1Value: "99.9%",
@@ -50,6 +64,9 @@ const DEFAULT_SETTINGS: HomepageSettings = {
   testimonialStat2Label: "Rellenos Artificiales",
   testimonialStat2Desc: "Nuestro compromiso con la ciencia limpia significa cero aditivos, cero rellenos, cero compromisos.",
   
+  protocolsTitle: "Protocolos por Diseño",
+  protocolsSubtitle: "Sistemas curados para resultados fisiológicos específicos.",
+
   cat1Title: "Proteínas Estructurales",
   cat1Subtitle: "Bloques Constructores",
   cat1Image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCRth1ub7kSzNcQlzkQD3TfwIAgIp0SVJrsqXUmAggFvXG0ICf7KglopBNJDsx6-BBpDkZViP61t5CTSO3pEu4o_AmMgqsBK7Z30j2GlGb6yAqbueb85E5X4Ns6xQqeWW3XKUDI5mHjNQS6X8R8wCHH-04xIIDbMiaqCG6c_nWbMduYRJoJfTrwfRCTriVCM0uIIBWzfNMYaL4psQbT595uKiq2YaZ5JvRdQmJtLkBmrvCxQVOawcewQA6UMQqBHAewMxkYC4ZFFhw",
@@ -65,6 +82,25 @@ const DEFAULT_SETTINGS: HomepageSettings = {
   
   cat4Title: "Equipamiento",
   cat4Link: "/tienda?c=Equipamiento",
+
+  footerCol1Title: "Ciencia",
+  footerCol1Links: [
+    { label: "Ensayos Clínicos", url: "#" },
+    { label: "Resultados de Lab", url: "#" },
+    { label: "Consejo Asesor", url: "#" }
+  ],
+  footerCol2Title: "Tienda",
+  footerCol2Links: [
+    { label: "Proteínas", url: "/tienda" },
+    { label: "Vitaminas", url: "/tienda" },
+    { label: "Suscríbete y Ahorra", url: "/tienda" }
+  ],
+  footerCol3Title: "Social",
+  footerCol3Links: [
+    { label: "Instagram", url: "#" },
+    { label: "Twitter", url: "#" },
+    { label: "Strava", url: "#" }
+  ],
 
   gtmId: "",
   gaId: "",

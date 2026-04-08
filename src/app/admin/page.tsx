@@ -23,7 +23,8 @@ const EMPTY_FORM = {
   description: "",
   benefits: "",
   featured: true,
-  order: "0",
+  homepageOrder: "0",
+  categoryOrder: "0",
 };
 
 type UploadState = "idle" | "uploading" | "done" | "error";
@@ -131,7 +132,8 @@ export default function AdminPage() {
       description: p.description ?? "",
       benefits: p.benefits?.join("\n") ?? "",
       featured: p.featured,
-      order: String(p.order ?? 0),
+      homepageOrder: String(p.homepageOrder ?? p.order ?? 0),
+      categoryOrder: String(p.categoryOrder ?? p.order ?? 0),
     });
     setImageFile(null);
     setImagePreview(p.imageUrl); // show existing image
@@ -172,7 +174,8 @@ export default function AdminPage() {
         price: parseInt(form.price.replace(/\D/g, ""), 10),
         imageUrl,
         featured: form.featured,
-        order: parseInt(form.order || "0", 10),
+        homepageOrder: parseInt(form.homepageOrder || "0", 10),
+        categoryOrder: parseInt(form.categoryOrder || "0", 10),
       };
       
       const badgeText = form.badge.trim();
@@ -442,16 +445,28 @@ export default function AdminPage() {
             </div>
 
             {/* Ordering */}
-            <div className="space-y-1.5 md:col-span-2 border-t border-slate-100 pt-5">
-              <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Orden de Aparición (Prioridad)</label>
-              <input
-                type="number"
-                value={form.order}
-                onChange={(e) => setForm({ ...form, order: e.target.value })}
-                placeholder="0 = Aparece primero, 1 = Segundo..."
-                className="w-full max-w-xs border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
-              />
-              <p className="text-xs text-slate-400 mt-1">Los productos con números menores aparecen más arriba. Por defecto es 0.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-slate-100 pt-5 md:col-span-2">
+              <div className="space-y-1.5">
+                <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Orden en Pág Principal</label>
+                <input
+                  type="number"
+                  value={form.homepageOrder}
+                  onChange={(e) => setForm({ ...form, homepageOrder: e.target.value })}
+                  placeholder="0 = Aparece primero..."
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Orden en Categoría</label>
+                <input
+                  type="number"
+                  value={form.categoryOrder}
+                  onChange={(e) => setForm({ ...form, categoryOrder: e.target.value })}
+                  placeholder="0 = Aparece primero..."
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+                />
+              </div>
+              <p className="text-xs text-slate-400 mt-1 md:col-span-2">Los productos con números menores aparecen más arriba. Por defecto es 0.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

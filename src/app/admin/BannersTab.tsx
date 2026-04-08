@@ -28,6 +28,11 @@ export default function BannersTab({ showMessage }: Props) {
   const [dragging, setDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [mobileImageFile, setMobileImageFile] = useState<File | null>(null);
+  const [mobileImagePreview, setMobileImagePreview] = useState<string | null>(null);
+  const [mobileDragging, setMobileDragging] = useState(false);
+  const mobileFileInputRef = useRef<HTMLInputElement>(null);
+
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
   const loadBanners = useCallback(async () => {
@@ -76,6 +81,33 @@ export default function BannersTab({ showMessage }: Props) {
     if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
+  function acceptMobileFile(file: File) {
+    if (!file.type.startsWith("image/")) {
+      showMessage("Solo se aceptan imágenes", false);
+      return;
+    }
+    setMobileImageFile(file);
+    setMobileImagePreview(URL.createObjectURL(file));
+  }
+
+  function onMobileFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) acceptMobileFile(file);
+  }
+
+  function onMobileDrop(e: DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    setMobileDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) acceptMobileFile(file);
+  }
+
+  function clearMobileImage() {
+    setMobileImageFile(null);
+    setMobileImagePreview(null);
+    if (mobileFileInputRef.current) mobileFileInputRef.current.value = "";
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!imageFile) {
@@ -87,10 +119,16 @@ export default function BannersTab({ showMessage }: Props) {
       setUploadState("uploading");
       setUploadProgress(0);
       const imageUrl = await uploadProductImage(imageFile, setUploadProgress);
+      let mobileImageUrl = undefined;
+      if (mobileImageFile) {
+        setUploadProgress(0);
+        mobileImageUrl = await uploadProductImage(mobileImageFile, setUploadProgress);
+      }
       setUploadState("done");
 
       await addBanner({
         imageUrl,
+        ...(mobileImageUrl ? { mobileImageUrl } : {}),
         title: title.trim(),
         active,
       });
@@ -99,6 +137,7 @@ export default function BannersTab({ showMessage }: Props) {
       setTitle("");
       setActive(true);
       clearImage();
+      clearMobileImage();
       await loadBanners();
     } catch (err) {
       console.error(err);
@@ -178,6 +217,49 @@ export default function BannersTab({ showMessage }: Props) {
               </div>
             )}
             <input ref={fileInputRef} type="file" accept="image/*" onChange={onFileChange} className="hidden" />
+          </div>
+
+          {/* Mobile Drop zone */}
+          <div className="space-y-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest block">
+              Imagen del Banner para Celular (Opcional - Vertical o cuadrada)
+            </label>
+            {mobileImagePreview ? (
+              <div className="relative w-full max-w-sm aspect-[4/5] rounded-2xl overflow-hidden bg-slate-50 border border-slate-200">
+                <Image src={mobileImagePreview} alt="Preview Celular" fill className="object-cover" unoptimized />
+                <button
+                  type="button"
+                  onClick={clearMobileImage}
+                  className="absolute top-3 right-3 bg-white/90 hover:bg-white text-slate-700 rounded-full p-1.5 shadow transition-colors"
+                >
+                  <span className="material-symbols-outlined text-xl leading-none">close</span>
+                </button>
+                {uploadState === "uploading" && (
+                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-3">
+                    <div className="w-1/2 h-2 bg-white/30 rounded-full overflow-hidden">
+                      <div className="h-full bg-white rounded-full transition-all" style={{ width: `${uploadProgress}%` }} />
+                    </div>
+                    <p className="text-white text-sm font-bold">{uploadProgress}%</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div
+                onDragOver={(e) => { e.preventDefault(); setMobileDragging(true); }}
+                onDragLeave={() => setMobileDragging(false)}
+                onDrop={onMobileDrop}
+                onClick={() => mobileFileInputRef.current?.click()}
+                className={`w-full max-w-sm aspect-[4/5] rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-3 cursor-pointer transition-all select-none
+                  ${mobileDragging ? "border-[#0A192F] bg-slate-100" : "border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-slate-300"}`}
+              >
+                <span className="material-symbols-outlined text-slate-400 text-5xl">smartphone</span>
+                <div className="text-center px-4">
+                  <p className="font-bold text-slate-600 text-sm">Arrastra la imagen móvil aquí</p>
+                  <p className="text-xs text-slate-400 mt-1">Ideal 1080x1350px</p>
+                </div>
+              </div>
+            )}
+            <input ref={mobileFileInputRef} type="file" accept="image/*" onChange={onMobileFileChange} className="hidden" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-end">

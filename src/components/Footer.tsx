@@ -1,8 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { getHomepageSettings, HomepageSettings } from "@/lib/settings";
 
 export default function Footer() {
+  const [settings, setSettings] = useState<HomepageSettings | null>(null);
+
+  useEffect(() => {
+    getHomepageSettings().then(setSettings).catch(console.error);
+  }, []);
   return (
     <footer className="bg-[#0A192F] text-white pt-32 pb-16 px-6">
       <div className="max-w-7xl mx-auto">
@@ -37,30 +44,30 @@ export default function Footer() {
 
           {/* Links */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
-            <div className="space-y-6">
-              <h4 className="text-[10px] font-black tracking-[0.3em] uppercase opacity-40">Ciencia</h4>
-              <ul className="space-y-4 font-bold text-sm">
-                <li><Link href="#" className="hover:text-slate-400 transition-colors">Ensayos Clínicos</Link></li>
-                <li><Link href="#" className="hover:text-slate-400 transition-colors">Resultados de Lab</Link></li>
-                <li><Link href="#" className="hover:text-slate-400 transition-colors">Consejo Asesor</Link></li>
-              </ul>
-            </div>
-            <div className="space-y-6">
-              <h4 className="text-[10px] font-black tracking-[0.3em] uppercase opacity-40">Tienda</h4>
-              <ul className="space-y-4 font-bold text-sm">
-                <li><Link href="/tienda" className="hover:text-slate-400 transition-colors">Proteínas</Link></li>
-                <li><Link href="/tienda" className="hover:text-slate-400 transition-colors">Vitaminas</Link></li>
-                <li><Link href="/tienda" className="hover:text-slate-400 transition-colors">Suscríbete y Ahorra</Link></li>
-              </ul>
-            </div>
-            <div className="space-y-6">
-              <h4 className="text-[10px] font-black tracking-[0.3em] uppercase opacity-40">Social</h4>
-              <ul className="space-y-4 font-bold text-sm">
-                <li><Link href="#" className="hover:text-slate-400 transition-colors">Instagram</Link></li>
-                <li><Link href="#" className="hover:text-slate-400 transition-colors">Twitter</Link></li>
-                <li><Link href="#" className="hover:text-slate-400 transition-colors">Strava</Link></li>
-              </ul>
-            </div>
+            {[1, 2, 3].map((colNum) => {
+              if (!settings) return null;
+              const titleKey = `footerCol${colNum}Title` as keyof HomepageSettings;
+              const linksKey = `footerCol${colNum}Links` as keyof HomepageSettings;
+              const title = settings[titleKey] as string;
+              const links = (settings[linksKey] as {label: string, url: string}[]) || [];
+              
+              if (!title && links.length === 0) return null;
+              
+              return (
+                <div key={colNum} className="space-y-6">
+                  <h4 className="text-[10px] font-black tracking-[0.3em] uppercase opacity-40">{title}</h4>
+                  <ul className="space-y-4 font-bold text-sm">
+                    {links.map((link, idx) => link.label ? (
+                      <li key={idx}>
+                        <Link href={link.url || "#"} className="hover:text-slate-400 transition-colors">
+                          {link.label}
+                        </Link>
+                      </li>
+                    ) : null)}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -69,7 +76,7 @@ export default function Footer() {
           <p className="text-xl font-black uppercase tracking-tighter" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
             NEUTROFARMA
           </p>
-          <p className="text-xs font-medium text-white/40">© 2024 NEUTROFARMA. PARA LA ELITE.</p>
+          <p className="text-xs font-medium text-white/40">© 2026 NEUTROFARMA. PARA LA ELITE.</p>
         </div>
       </div>
     </footer>
