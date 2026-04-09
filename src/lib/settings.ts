@@ -24,18 +24,28 @@ export interface HomepageSettings {
   cat1Title: string;
   cat1Subtitle: string;
   cat1Image: string;
+  cat1MobileImage?: string;
   cat1Link: string;
+  cat1ButtonText?: string;
 
   cat2Title: string;
   cat2Subtitle: string;
   cat2Image: string;
+  cat2MobileImage?: string;
   cat2Link: string;
+  cat2ButtonText?: string;
 
   cat3Title: string;
+  cat3Image?: string;
+  cat3MobileImage?: string;
   cat3Link: string;
+  cat3ButtonText?: string;
 
   cat4Title: string;
+  cat4Image?: string;
+  cat4MobileImage?: string;
   cat4Link: string;
+  cat4ButtonText?: string;
 
   // Footer
   footerCol1Title: string;
@@ -70,18 +80,28 @@ const DEFAULT_SETTINGS: HomepageSettings = {
   cat1Title: "Proteínas Estructurales",
   cat1Subtitle: "Bloques Constructores",
   cat1Image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCRth1ub7kSzNcQlzkQD3TfwIAgIp0SVJrsqXUmAggFvXG0ICf7KglopBNJDsx6-BBpDkZViP61t5CTSO3pEu4o_AmMgqsBK7Z30j2GlGb6yAqbueb85E5X4Ns6xQqeWW3XKUDI5mHjNQS6X8R8wCHH-04xIIDbMiaqCG6c_nWbMduYRJoJfTrwfRCTriVCM0uIIBWzfNMYaL4psQbT595uKiq2YaZ5JvRdQmJtLkBmrvCxQVOawcewQA6UMQqBHAewMxkYC4ZFFhw",
+  cat1MobileImage: "",
   cat1Link: "/tienda?c=Proteína",
+  cat1ButtonText: "Explorar Colección",
 
-  cat2Title: "Micronutrientes",
-  cat2Subtitle: "Soporte diario de grado clínico.",
-  cat2Image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAhWoiGEsgK59tXjDgBv6SUAsD44IlV7MTxj7sgLIarTdgOBIP3VedDKVC2UOY2FslHskr6jUS5QHDVB-RuQjOy0R_MbpYG0qtbQG9MVYzfSfYR8esR2dpV7q8sUkC2RzPNfZWf7Z-i2739BS_XiUTuvFUOv52BN8gf70ahp74U8L_3Z0eKqrsLzz2OgyPeztry7Vl76H4zL2EN7gMPQBDxXifxmGF0FL1lkL7glv0L39EMGQSSFPQRtFcseo4LAISY1rELbccA",
+  cat2Title: "Vitaminas de Absorción Rápida",
+  cat2Subtitle: "Disponibilidad Inmediata",
+  cat2Image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQ-W-1Z_H2a8W5z6sS4r0B29b5tY0a0l2F18y4Qv3D1H1-d6F0i4k9B-N5lQw3P3S6y4O9Y7-I3g6A3D4v8a7o6j6Q7O0l1E6f4S4G1W4s8M5g2v6f2b6i9W2E9V5b3S3-a2l2y8E7p8m8g1a2g5e9h0y0H3I3v3g0H9t6j5G0q8X7B8_p4S2l6b9U4",
+  cat2MobileImage: "",
   cat2Link: "/tienda?c=Vitaminas",
+  cat2ButtonText: "",
 
-  cat3Title: "Bienestar",
-  cat3Link: "/tienda?c=Bienestar",
-  
+  cat3Title: "Salud Mental",
+  cat3Image: "",
+  cat3MobileImage: "",
+  cat3Link: "/tienda?c=Salud%20Mental",
+  cat3ButtonText: "",
+
   cat4Title: "Equipamiento",
+  cat4Image: "",
+  cat4MobileImage: "",
   cat4Link: "/tienda?c=Equipamiento",
+  cat4ButtonText: "",
 
   footerCol1Title: "Ciencia",
   footerCol1Links: [

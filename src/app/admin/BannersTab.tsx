@@ -17,6 +17,10 @@ export default function BannersTab({ showMessage }: Props) {
   
   // Create form
   const [title, setTitle] = useState("");
+  const [buttonText, setButtonText] = useState("");
+  const [buttonLink, setButtonLink] = useState("");
+  const [buttonBgColor, setButtonBgColor] = useState("#FFFFFF");
+  const [buttonTextColor, setButtonTextColor] = useState("#0A192F");
   const [active, setActive] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
@@ -130,11 +134,19 @@ export default function BannersTab({ showMessage }: Props) {
         imageUrl,
         ...(mobileImageUrl ? { mobileImageUrl } : {}),
         title: title.trim(),
+        buttonText: buttonText.trim(),
+        buttonLink: buttonLink.trim(),
+        buttonBgColor,
+        buttonTextColor,
         active,
       });
       
       showMessage("Banner agregado ✓");
       setTitle("");
+      setButtonText("");
+      setButtonLink("");
+      setButtonBgColor("#FFFFFF");
+      setButtonTextColor("#0A192F");
       setActive(true);
       clearImage();
       clearMobileImage();
@@ -273,6 +285,61 @@ export default function BannersTab({ showMessage }: Props) {
                 placeholder="Rendimiento de Elite"
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
               />
+            </div>
+
+            <div className="space-y-1.5 flex-1">
+              <label className="text-xs font-black text-slate-500 uppercase tracking-widest">
+                Texto del Botón (Opcional)
+              </label>
+              <input
+                value={buttonText}
+                onChange={(e) => setButtonText(e.target.value)}
+                placeholder="Ej. Ir a la tienda"
+                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+              />
+            </div>
+
+            <div className="space-y-1.5 flex-1">
+              <label className="text-xs font-black text-slate-500 uppercase tracking-widest">
+                Enlace del Botón (Opcional)
+              </label>
+              <input
+                value={buttonLink}
+                onChange={(e) => setButtonLink(e.target.value)}
+                placeholder="Ej. /tienda?c=Proteínas"
+                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <label className="text-xs font-black text-slate-500 uppercase tracking-widest">
+                  Fondo del Botón
+                </label>
+                <div className="flex items-center gap-2 border border-slate-200 rounded-xl px-3 py-2">
+                  <input
+                    type="color"
+                    value={buttonBgColor}
+                    onChange={(e) => setButtonBgColor(e.target.value)}
+                    className="w-8 h-8 rounded border-none cursor-pointer p-0 bg-transparent"
+                  />
+                  <span className="text-xs font-mono text-slate-500 uppercase">{buttonBgColor}</span>
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-black text-slate-500 uppercase tracking-widest">
+                  Texto del Botón
+                </label>
+                <div className="flex items-center gap-2 border border-slate-200 rounded-xl px-3 py-2">
+                  <input
+                    type="color"
+                    value={buttonTextColor}
+                    onChange={(e) => setButtonTextColor(e.target.value)}
+                    className="w-8 h-8 rounded border-none cursor-pointer p-0 bg-transparent"
+                  />
+                  <span className="text-xs font-mono text-slate-500 uppercase">{buttonTextColor}</span>
+                </div>
+              </div>
             </div>
             
             <div className="flex items-center gap-3 mb-3 md:justify-end">

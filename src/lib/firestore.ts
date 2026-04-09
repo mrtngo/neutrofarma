@@ -36,6 +36,10 @@ export interface Banner {
   title?: string;
   imageUrl: string;
   mobileImageUrl?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  buttonBgColor?: string;
+  buttonTextColor?: string;
   active: boolean;
   createdAt?: Timestamp;
 }

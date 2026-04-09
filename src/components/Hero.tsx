@@ -79,11 +79,15 @@ export default function Hero({ initialBanners }: { initialBanners?: Banner[] }) 
                 )}
                 <div>
                   <Link
-                    href="/tienda"
-                    className="inline-flex bg-white text-[#0A192F] px-10 py-5 font-black rounded-full shadow-2xl hover:bg-slate-100 transition-all active:scale-95 uppercase text-sm tracking-widest cursor-pointer"
-                    style={{ fontFamily: "var(--font-lexend, Lexend)" }}
+                    href={banner.buttonLink || "/tienda"}
+                    className="inline-flex px-10 py-5 font-black rounded-full shadow-2xl hover:opacity-90 transition-all active:scale-95 uppercase text-sm tracking-widest cursor-pointer"
+                    style={{ 
+                      fontFamily: "var(--font-lexend, Lexend)",
+                      backgroundColor: banner.buttonBgColor || "#FFFFFF",
+                      color: banner.buttonTextColor || "#0A192F"
+                    }}
                   >
-                    Ir a la Tienda
+                    {banner.buttonText || "Ir a la Tienda"}
                   </Link>
                 </div>
               </div>

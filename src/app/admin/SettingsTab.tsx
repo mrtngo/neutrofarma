@@ -220,6 +220,10 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
         {/* Cat 1 */}
         <h3 className="font-bold text-slate-700 mb-4 pb-2 border-b">1. Cuadro Principal (Izquierda)</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Link Categoría (?c=)</label>
+            <input value={settings.cat1Link || ""} onChange={(e) => handleChange("cat1Link", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          </div>
           <div className="space-y-1.5">
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Título</label>
             <input value={settings.cat1Title} onChange={(e) => handleChange("cat1Title", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
@@ -228,16 +232,29 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Subtítulo</label>
             <input value={settings.cat1Subtitle} onChange={(e) => handleChange("cat1Subtitle", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
           </div>
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Texto del Botón (Opcional)</label>
+            <input value={settings.cat1ButtonText || ""} onChange={(e) => handleChange("cat1ButtonText", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          </div>
           <ImageUploader 
-            label="Imagen de Fondo" 
+            label="Imagen de Fondo (Desktop)" 
             value={settings.cat1Image} 
             onChange={(url) => handleChange("cat1Image", url)} 
+          />
+          <ImageUploader 
+            label="Imagen de Fondo (Celular)" 
+            value={settings.cat1MobileImage || ""} 
+            onChange={(url) => handleChange("cat1MobileImage", url)} 
           />
         </div>
 
         {/* Cat 2 */}
         <h3 className="font-bold text-slate-700 mb-4 pb-2 border-b">2. Cuadro Arriba Derecha</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Link Categoría (?c=)</label>
+            <input value={settings.cat2Link || ""} onChange={(e) => handleChange("cat2Link", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          </div>
           <div className="space-y-1.5">
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Título</label>
             <input value={settings.cat2Title} onChange={(e) => handleChange("cat2Title", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
@@ -246,37 +263,74 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Subtítulo</label>
             <input value={settings.cat2Subtitle} onChange={(e) => handleChange("cat2Subtitle", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
           </div>
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Texto del Botón (Opcional)</label>
+            <input value={settings.cat2ButtonText || ""} onChange={(e) => handleChange("cat2ButtonText", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          </div>
           <ImageUploader 
-            label="Imagen de Fondo" 
+            label="Imagen de Fondo (Desktop)" 
             value={settings.cat2Image} 
             onChange={(url) => handleChange("cat2Image", url)} 
+          />
+          <ImageUploader 
+            label="Imagen de Fondo (Celular)" 
+            value={settings.cat2MobileImage || ""} 
+            onChange={(url) => handleChange("cat2MobileImage", url)} 
           />
         </div>
 
         {/* Cat 3 */}
         <h3 className="font-bold text-slate-700 mb-4 pb-2 border-b">3. Cuadro Abajo Derecha (Izquierdo)</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Link Categoría (?c=)</label>
+            <input value={settings.cat3Link || ""} onChange={(e) => handleChange("cat3Link", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Título</label>
             <input value={settings.cat3Title} onChange={(e) => handleChange("cat3Title", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
           </div>
-          <div className="space-y-1.5">
-            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Link Categoría (?c=)</label>
-            <input value={settings.cat3Link} onChange={(e) => handleChange("cat3Link", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Texto del Botón (Opcional)</label>
+            <input value={settings.cat3ButtonText || ""} onChange={(e) => handleChange("cat3ButtonText", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
           </div>
+          <ImageUploader 
+            label="Imagen de Fondo (Desktop)" 
+            value={settings.cat3Image || ""} 
+            onChange={(url) => handleChange("cat3Image", url)} 
+          />
+          <ImageUploader 
+            label="Imagen de Fondo (Celular)" 
+            value={settings.cat3MobileImage || ""} 
+            onChange={(url) => handleChange("cat3MobileImage", url)} 
+          />
         </div>
 
         {/* Cat 4 */}
         <h3 className="font-bold text-slate-700 mb-4 pb-2 border-b">4. Cuadro Abajo Derecha (Derecho)</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Link Categoría (?c=)</label>
+            <input value={settings.cat4Link || ""} onChange={(e) => handleChange("cat4Link", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
             <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Título</label>
             <input value={settings.cat4Title} onChange={(e) => handleChange("cat4Title", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
           </div>
-          <div className="space-y-1.5">
-            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Link Categoría (?c=)</label>
-            <input value={settings.cat4Link} onChange={(e) => handleChange("cat4Link", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Texto del Botón (Opcional)</label>
+            <input value={settings.cat4ButtonText || ""} onChange={(e) => handleChange("cat4ButtonText", e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none" />
           </div>
+          <ImageUploader 
+            label="Imagen de Fondo (Desktop - Opcional)" 
+            value={settings.cat4Image || ""} 
+            onChange={(url) => handleChange("cat4Image", url)} 
+          />
+          <ImageUploader 
+            label="Imagen de Fondo (Celular - Opcional)" 
+            value={settings.cat4MobileImage || ""} 
+            onChange={(url) => handleChange("cat4MobileImage", url)} 
+          />
         </div>
       </section>
 
