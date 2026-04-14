@@ -9,10 +9,14 @@ interface TrackingProps {
 }
 
 export default function TrackingScripts({ gtmId, gaId, metaPixelId }: TrackingProps) {
+  const cleanGtmId = gtmId?.trim();
+  const cleanGaId = gaId?.trim();
+  const cleanMetaPixelId = metaPixelId?.trim();
+
   return (
     <>
       {/* Google Tag Manager */}
-      {gtmId && (
+      {cleanGtmId && (
         <Script
           id="gtm"
           strategy="afterInteractive"
@@ -22,16 +26,16 @@ export default function TrackingScripts({ gtmId, gaId, metaPixelId }: TrackingPr
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${gtmId}');
+              })(window,document,'script','dataLayer','${cleanGtmId}');
             `,
           }}
         />
       )}
 
       {/* Google Analytics */}
-      {gaId && (
+      {cleanGaId && (
         <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+          <Script src={`https://www.googletagmanager.com/gtag/js?id=${cleanGaId}`} strategy="afterInteractive" />
           <Script
             id="ga"
             strategy="afterInteractive"
@@ -40,7 +44,7 @@ export default function TrackingScripts({ gtmId, gaId, metaPixelId }: TrackingPr
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${gaId}');
+                gtag('config', '${cleanGaId}');
               `,
             }}
           />
@@ -48,7 +52,7 @@ export default function TrackingScripts({ gtmId, gaId, metaPixelId }: TrackingPr
       )}
 
       {/* Meta Pixel */}
-      {metaPixelId && (
+      {cleanMetaPixelId && (
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
@@ -62,7 +66,7 @@ export default function TrackingScripts({ gtmId, gaId, metaPixelId }: TrackingPr
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${metaPixelId}');
+              fbq('init', '${cleanMetaPixelId}');
               fbq('track', 'PageView');
             `,
           }}
