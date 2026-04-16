@@ -48,6 +48,7 @@ export interface HomepageSettings {
   cat4ButtonText?: string;
 
   // Footer
+  footerTagline?: string;
   footerCol1Title: string;
   footerCol1Links: { label: string; url: string }[];
   footerCol2Title: string;
@@ -103,6 +104,7 @@ const DEFAULT_SETTINGS: HomepageSettings = {
   cat4Link: "/tienda?c=Equipamiento",
   cat4ButtonText: "",
 
+  footerTagline: "Obtén acceso anticipado a investigaciones científicas, lanzamientos de productos y protocolos de rendimiento exclusivos.",
   footerCol1Title: "Ciencia",
   footerCol1Links: [
     { label: "Ensayos Clínicos", url: "#" },

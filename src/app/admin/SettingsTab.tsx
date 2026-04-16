@@ -339,6 +339,15 @@ export default function SettingsTab({ showMessage }: SettingsTabProps) {
         <h2 className="text-xl font-black text-[#0A192F] mb-8" style={{ fontFamily: "var(--font-lexend, Lexend)" }}>
           Pie de Página (Footer)
         </h2>
+        <div className="space-y-1.5 mb-8">
+          <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Descripción del Newsletter (texto debajo del título)</label>
+          <textarea
+            value={settings.footerTagline || ""}
+            onChange={(e) => handleChange("footerTagline", e.target.value)}
+            className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A192F]"
+            rows={2}
+          />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[1, 2, 3].map((colNum) => {
              const titleKey = `footerCol${colNum}Title` as keyof HomepageSettings;

@@ -24,7 +24,7 @@ export default function Footer() {
               <span className="gradient-text">CÍRCULO ELITE.</span>
             </h3>
             <p className="text-slate-400 max-w-md text-lg font-medium">
-              Obtén acceso anticipado a investigaciones científicas, lanzamientos de productos y protocolos de rendimiento exclusivos.
+              {settings?.footerTagline ?? "Obt\u00e9n acceso anticipado a investigaciones cient\u00edficas, lanzamientos de productos y protocolos de rendimiento exclusivos."}
             </p>
             <form className="flex flex-col sm:flex-row gap-4 max-w-md" onSubmit={(e) => e.preventDefault()}>
               <input
